@@ -3,6 +3,7 @@ import Login from './components/Login_Register/Login';
 import Register from './components/Login_Register/Register';
 import Dashboard from './components/Dashboard/Dashboard';
 import Car from './components/CarManager/Car';
+import CarInfo from './components/CarManager/CarInfo';
 
 // import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/dashboard/:id' Component={Dashboard} />
 
           <Route path='/car' Component={Car} />
+          <Route path='/carInfo/:id' Component={CarInfo} />
         </Routes>
       </Router>
     </div>

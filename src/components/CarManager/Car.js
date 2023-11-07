@@ -8,6 +8,7 @@
 //         The user can enter car details (e.g., make, model, year) and submit the data using the "addNewCar" API. -->
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 function Car() {
    const [cars, setCars] = useState([]);
@@ -19,7 +20,7 @@ function Car() {
    useEffect(() => {
       const fetchData = async () => {
          const url = 'http://127.0.0.1:8000/api/getAllCars';
-         
+
          try {
             const response = await fetch(url);
             const result = await response.json();
@@ -31,7 +32,7 @@ function Car() {
          catch(error){
             console.log(error);
          }
-         }
+      }
       fetchData();
    },[]);
 
@@ -56,15 +57,31 @@ function Car() {
       }
    };
 
+
+   const navigate = useNavigate();
+   
+   async function getCarInfo(carId) {
+      
+      try {
+         const response = await axios.get(`http://127.0.0.1:8000/api/getCarById/${carId}`);
+         const carInfo = response.data;
+         console.log(carInfo);
+         // redirect to new page with car info
+         navigate(`/carInfo/${carId}`);
+      } catch (error) {
+         console.log(error);
+      }
+   }
    return (
       <div>
             <h1>Car</h1>
             
             
             { cars.data !==undefined && cars.data.map((car) => {
-               return <div key={car.id}>
-                        {car.brand} - {car.model} - {car.year}
-                      </div>   
+                return <div key={car.id}>
+                              {console.log(car.id)}
+                              {car.brand} - {car.model} - {car.year} -- <button onClick={() => getCarInfo(car.id)}>Info</button>
+                           </div>   
             })}
             
             <br/>
